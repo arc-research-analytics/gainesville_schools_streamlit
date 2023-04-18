@@ -7,8 +7,6 @@ import pydeck as pdk
 import plotly.express as px
 from millify import millify
 from millify import prettify
-# import leafmap.colormaps as cm
-# from leafmap.common import hex_to_rgb
 import jenkspy
 from datetime import date
 import numpy as np
@@ -167,9 +165,6 @@ def load_data():
         ]]
 
     gdf_joined['2022 Median Household Income'] = gdf_joined['2022 Median Household Income'].astype(str).str.replace('$','').str.replace(',','').astype(int)
-    gdf_joined.to_file('testerChester.gpkg')
-    # gdf_joined.drop(columns=['geometry'], inplace=True)
-    # st.write(gdf_joined.columns)
 
     return gdf_joined
 
