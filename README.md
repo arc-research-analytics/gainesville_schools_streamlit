@@ -1,1 +1,1 @@
-# gainesville_schools_streamlit
+# streamlit-gainesville-schools
