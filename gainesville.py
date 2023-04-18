@@ -38,10 +38,37 @@ do_custom_stuff = """
 
 st.markdown(do_custom_stuff, unsafe_allow_html=True)
 
-custom_colors_dark = ['#ffffff','#a7b2b8','#70828c','#3c5461','#022b3a']
+# coloration
+blues = [
+    'eff3ff',
+    'bdd7e7',
+    '6baed6',
+    '3182bd',
+    '08519c'
+]
 
-# convert the above hex list to RGB values
-colors_dark_rgb = [tuple(int(h.lstrip('#')[i:i+2], 16) for i in (0, 2, 4)) for h in custom_colors_dark]
+greens = [
+    'edf8e9',
+    'bae4b3',
+    '74c476',
+    '31a354',
+    '006d2c'
+]
+
+purples = [
+    'f2f0f7',
+    'cbc9e2',
+    '9e9ac8',
+    '756bb1',
+    '54278f'
+]
+
+map_var_color = {
+    'Current population':blues,
+    'Projected population':blues,
+    'Median household income':greens,
+    'Millennial population':purples
+}
 
 # custo-myze ^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -60,6 +87,12 @@ map_var = st.sidebar.selectbox(
      'Median household income',
      'Millennial population')
 )
+
+# define the choropleth map color based on the sidebar selection above
+choro_hex = map_var_color[map_var]
+
+# convert the above hex list to RGB values
+choro_rgb = [tuple(int(h[i:i+2], 16) for i in (0, 2, 4)) for h in choro_hex]
 
 if map_view == 'Demographics + enrollment':
     school_var = st.sidebar.selectbox(
@@ -159,17 +192,9 @@ def school_map_2D():
         gdf_joined['tooltip_value'] = map_var_dict[map_var].apply(lambda x: "{:,.0f}".format((x)))
 
     # set choropleth color
-    map_var_color = {
-        'Current population':'Blues',
-        'Projected population':'Blues',
-        'Median household income':'Greens',
-        'Millennial population':'Purples'
-    }
 
-    # color_brewer_colors = cm.get_palette(map_var_color[map_var], 5)
-    # colors_rgb = [hex_to_rgb(c) for c in color_brewer_colors]
 
-    colors_rgb = list(colors_dark_rgb)
+    colors_rgb = list(choro_rgb)
 
     # ignore the first value, which is essentially white
     colors_rgb = colors_rgb[1:]
@@ -266,16 +291,7 @@ def school_map_3D():
 
 
     # create choropleth color ramp
-    map_var_color = {
-        'Current population':'Blues',
-        'Projected population':'Blues',
-        'Median household income':'Greens',
-        'Millennial population':'Purples'
-    }
-
-    # color_brewer_colors = cm.get_palette(map_var_color[map_var], 5)
-    # colors_rgb = [hex_to_rgb(c) for c in color_brewer_colors]
-    colors_rgb = list(colors_dark_rgb)
+    colors_rgb = list(choro_rgb)
 
     # ignore the first value, which is essentially white
     colors_rgb = colors_rgb[1:]
@@ -394,7 +410,6 @@ if map_view == 'Demographics only':
 else:
     col1.pydeck_chart(school_map_3D(), use_container_width=True)
     col1.info("Note: Shift + click to change map pitch & angle. Darker colors corresponds to greater numeric value of demographic variable; 'taller' regions correpsond to larger enrollment footprint.")
-
 
 
 # style the KPI readoutVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
