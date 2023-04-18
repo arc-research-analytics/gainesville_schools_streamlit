@@ -7,8 +7,8 @@ import pydeck as pdk
 import plotly.express as px
 from millify import millify
 from millify import prettify
-import leafmap.colormaps as cm
-from leafmap.common import hex_to_rgb
+# import leafmap.colormaps as cm
+# from leafmap.common import hex_to_rgb
 import jenkspy
 from datetime import date
 import numpy as np
@@ -37,6 +37,12 @@ do_custom_stuff = """
        """
 
 st.markdown(do_custom_stuff, unsafe_allow_html=True)
+
+custom_colors_dark = ['#ffffff','#a7b2b8','#70828c','#3c5461','#022b3a']
+
+# convert the above hex list to RGB values
+colors_dark_rgb = [tuple(int(h.lstrip('#')[i:i+2], 16) for i in (0, 2, 4)) for h in custom_colors_dark]
+
 # custo-myze ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 # Main section header
@@ -159,9 +165,11 @@ def school_map_2D():
         'Median household income':'Greens',
         'Millennial population':'Purples'
     }
-    color_brewer_colors = cm.get_palette(map_var_color[map_var], 5)
-    colors_rgb = [hex_to_rgb(c) for c in color_brewer_colors]
-    colors_rgb = list(colors_rgb)
+
+    # color_brewer_colors = cm.get_palette(map_var_color[map_var], 5)
+    # colors_rgb = [hex_to_rgb(c) for c in color_brewer_colors]
+
+    colors_rgb = list(colors_dark_rgb)
 
     # ignore the first value, which is essentially white
     colors_rgb = colors_rgb[1:]
@@ -265,9 +273,9 @@ def school_map_3D():
         'Millennial population':'Purples'
     }
 
-    color_brewer_colors = cm.get_palette(map_var_color[map_var], 5)
-    colors_rgb = [hex_to_rgb(c) for c in color_brewer_colors]
-    colors_rgb = list(colors_rgb)
+    # color_brewer_colors = cm.get_palette(map_var_color[map_var], 5)
+    # colors_rgb = [hex_to_rgb(c) for c in color_brewer_colors]
+    colors_rgb = list(colors_dark_rgb)
 
     # ignore the first value, which is essentially white
     colors_rgb = colors_rgb[1:]
