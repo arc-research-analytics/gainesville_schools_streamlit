@@ -61,11 +61,21 @@ purples = [
     '54278f'
 ]
 
+yellow_rd = [
+    'ffffcc',
+    'ffeda0',
+    'fd8d3c',
+    'fc4e2a',
+    'e31a1c'
+]
+
 map_var_color = {
     'Current population':blues,
     'Projected population':blues,
     'Median household income':greens,
-    'Millennial population':purples
+    'Millennial population':purples,
+    'Median Zillow Home Value':greens,
+    'Median Zillow 30-Day Change':yellow_rd
 }
 
 # custo-myze ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -83,7 +93,9 @@ map_var = st.sidebar.selectbox(
     ('Current population',
      'Projected population',
      'Median household income',
-     'Millennial population')
+     'Millennial population',
+     'Median Zillow Home Value',
+     'Median Zillow 30-Day Change')
 )
 
 # define the choropleth map color based on the sidebar selection above
@@ -145,7 +157,7 @@ def load_data():
     gdf = gpd.read_file('Data/Geospatial/Gainesville_BG.gpkg')
     
 
-    df = pd.read_csv('Data/Gainesville_test.csv', thousands=',')
+    df = pd.read_csv('Data/Gainesville_test2.csv', thousands=',')
     df['Block Group'] = df['Block Group'].astype(str)
 
     gdf_joined = gdf.merge(df, left_on = 'GEOID', right_on = 'Block Group')
@@ -158,6 +170,8 @@ def load_data():
         '2027 Total Population',
         '2022 Median Household Income',
         '2022 Millennial Pop',
+        'zestimate_median',
+        'median_30_change',
         'Gainesville_high',
         'Gainesville_middle_E',
         'Gainesville_middle_W',
@@ -178,11 +192,17 @@ def school_map_2D():
         'Current population':gdf_joined['2022 Total Population'],
         'Projected population':gdf_joined['2027 Total Population'],
         'Median household income':gdf_joined['2022 Median Household Income'],
-        'Millennial population':gdf_joined['2022 Millennial Pop']
+        'Millennial population':gdf_joined['2022 Millennial Pop'],
+        'Median Zillow Home Value':gdf_joined['zestimate_median'],
+        'Median Zillow 30-Day Change':gdf_joined['median_30_change']
     }
 
     if map_var == 'Median household income':
         gdf_joined['tooltip_value'] = gdf_joined['2022 Median Household Income'].apply(lambda x: "${:,.0f}".format((x)))
+    elif map_var == 'Median Zillow Home Value':
+        gdf_joined['tooltip_value'] = gdf_joined['zestimate_median'].apply(lambda x: "${:,.0f}".format((x)))
+    elif map_var == 'Median Zillow 30-Day Change':
+        gdf_joined['tooltip_value'] = gdf_joined['median_30_change'].apply(lambda x: "{:,.2f}%".format((x)))
     else:
         gdf_joined['tooltip_value'] = map_var_dict[map_var].apply(lambda x: "{:,.0f}".format((x)))
 
@@ -252,8 +272,6 @@ def school_map_2D():
         map_style=basemap_dict[basemap],
         tooltip=tooltip)
 
-    # gdf_joined.drop(columns=['geometry'], inplace=True)
-
     return r
 
 def school_map_3D():
@@ -272,11 +290,17 @@ def school_map_3D():
         'Current population':gdf_joined['2022 Total Population'],
         'Projected population':gdf_joined['2027 Total Population'],
         'Median household income':gdf_joined['2022 Median Household Income'],
-        'Millennial population':gdf_joined['2022 Millennial Pop']
+        'Millennial population':gdf_joined['2022 Millennial Pop'],
+        'Median Zillow Home Value':gdf_joined['zestimate_median'],
+        'Median Zillow 30-Day Change':gdf_joined['median_30_change']
     }
 
     if map_var == 'Median household income':
         gdf_joined['tooltip_value'] = gdf_joined['2022 Median Household Income'].apply(lambda x: "${:,.0f}".format((x)))
+    elif map_var == 'Median Zillow Home Value':
+        gdf_joined['tooltip_value'] = gdf_joined['zestimate_median'].apply(lambda x: "${:,.0f}".format((x)))
+    elif map_var == 'Median Zillow 30-Day Change':
+        gdf_joined['tooltip_value'] = gdf_joined['median_30_change'].apply(lambda x: "{:,.2f}%".format((x)))
     else:
         gdf_joined['tooltip_value'] = map_var_dict[map_var].apply(lambda x: "{:,.0f}".format((x)))
 
