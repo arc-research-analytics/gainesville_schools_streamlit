@@ -14,6 +14,9 @@ import numpy as np
 
 # map variables
 height=610
+latitude=34.29249106933631
+longitude= -83.82716252552814
+zoom=11
 
 # custo-myze vvvvvvvvvvvvvvvvvvvvvvvv
 im = Image.open('content/logo.png')
@@ -232,11 +235,11 @@ def school_map_2D():
    
     # create map intitial state
     initial_view_state = pdk.ViewState(
-        latitude=34.29249106933631, 
-        longitude= -83.82716252552814,
-        zoom=11.5, 
+        latitude=latitude, 
+        longitude=longitude,
+        zoom=zoom, 
         max_zoom=15, 
-        min_zoom=10,
+        min_zoom=9,
         pitch=0,
         bearing=0,
         height=height
@@ -332,12 +335,12 @@ def school_map_3D():
     
     # create map intitial state
     initial_view_state = pdk.ViewState(
-        latitude=34.300005779915246,
-        longitude=-83.82599193768385,  
-        zoom=11, 
+        latitude=latitude, 
+        longitude=longitude, 
+        zoom=10.8, 
         max_zoom=15, 
         min_zoom=10,
-        pitch=0,
+        pitch=20,
         bearing=0,
         height=height
     )
