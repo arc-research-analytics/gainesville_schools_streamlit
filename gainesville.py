@@ -35,6 +35,7 @@ do_custom_stuff = """
         li>div {
             color:  #FFFFFF !important;
         }
+        header {visibility: hidden;}
        </style>
        """
 
