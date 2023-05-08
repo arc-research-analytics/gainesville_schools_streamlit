@@ -156,7 +156,7 @@ basemap_dict = {
 }
 
 # the map
-col1, col2, col3 = st.columns([4,1,0.2])
+
 
 @st.cache_data
 def load_data():
@@ -430,10 +430,11 @@ gdf_joined = load_data()
 kpi_total = prettify(gdf_joined[school_var_dict[school_var]].sum())
 
 if map_view == 'Demographics only':
-    # st.dataframe(load_data())
+    col1, col2, col3 = st.columns([12,1,0.5])
     col1.pydeck_chart(school_map_2D(), use_container_width=True)
     col1.markdown("<span style='color:#000000'>Note: Darker colors corresponds to greater numeric value of demographic variable.</span>", unsafe_allow_html=True)
 else:
+    col1, col2, col3 = st.columns([4,1,0.2])
     col1.pydeck_chart(school_map_3D(), use_container_width=True)
     col1.markdown("<span style='color:#000000'>Note: Shift + click to change map pitch & angle. Darker colors corresponds to greater numeric value of demographic variable; 'taller' regions correpsond to larger enrollment footprint.</span>", unsafe_allow_html=True)
 
