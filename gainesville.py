@@ -87,7 +87,7 @@ map_var_color = {
 # custo-myze ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 # Main section header
-st.markdown("<h2><span style='color:#FFFFFF'>Gainesville City School Board Map</span></h2>", unsafe_allow_html=True)
+st.markdown("<h2><span style='color:#000000'>Gainesville City School Board Map</span></h2>", unsafe_allow_html=True)
 
 # sidebar
 map_view = st.sidebar.radio(
@@ -144,7 +144,8 @@ basemap = st.sidebar.selectbox(
      'Dark',
      'Streets', 
      'Satellite'
-     )
+     ),
+     index=1
 )
 
 basemap_dict = {
@@ -431,10 +432,10 @@ kpi_total = prettify(gdf_joined[school_var_dict[school_var]].sum())
 if map_view == 'Demographics only':
     # st.dataframe(load_data())
     col1.pydeck_chart(school_map_2D(), use_container_width=True)
-    col1.markdown("<span style='color:#FFFFFF'>Note: Darker colors corresponds to greater numeric value of demographic variable.</span>", unsafe_allow_html=True)
+    col1.markdown("<span style='color:#000000'>Note: Darker colors corresponds to greater numeric value of demographic variable.</span>", unsafe_allow_html=True)
 else:
     col1.pydeck_chart(school_map_3D(), use_container_width=True)
-    col1.info("Note: Shift + click to change map pitch & angle. Darker colors corresponds to greater numeric value of demographic variable; 'taller' regions correpsond to larger enrollment footprint.")
+    col1.markdown("<span style='color:#000000'>Note: Shift + click to change map pitch & angle. Darker colors corresponds to greater numeric value of demographic variable; 'taller' regions correpsond to larger enrollment footprint.</span>", unsafe_allow_html=True)
 
 
 # style the KPI readoutVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
@@ -447,7 +448,7 @@ lnk = '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1
 i = kpi_total
 
 htmlstr = f"""<p style='
-                        color: #FFFFFF; 
+                        color: #000000; 
                         font-size: {fontsize_label}px; 
                         text-align: {align};
                         border-radius: 7px; 
