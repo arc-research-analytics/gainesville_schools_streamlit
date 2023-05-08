@@ -11,6 +11,10 @@ import jenkspy
 from datetime import date
 import numpy as np
 
+
+# map variables
+height=610
+
 # custo-myze vvvvvvvvvvvvvvvvvvvvvvvv
 im = Image.open('content/logo.png')
 st.set_page_config(page_title='School Map', layout="wide", page_icon=im)
@@ -232,7 +236,7 @@ def school_map_2D():
         min_zoom=10,
         pitch=0,
         bearing=0,
-        height=650
+        height=height
     )
 
     geojson = pdk.Layer(
@@ -332,7 +336,7 @@ def school_map_3D():
         min_zoom=10,
         pitch=0,
         bearing=0,
-        height=650
+        height=height
     )
 
     geojson = pdk.Layer(
@@ -482,10 +486,6 @@ if map_view == 'Demographics + enrollment':
     col2.text("")
     col2.text("")
     col2.text("")
-    image = Image.open('content/logo.png')
-    with col2:
-        subcol1, subcol2, subcol3 = st.columns([1,1,1])
-        subcol2.image(image, width=80)
 else:
     col2.text("")
     col2.text("")
@@ -524,10 +524,12 @@ else:
     col2.text("")
     col2.text("")
     col2.text("")
-    image = Image.open('content/logo.png')
     with col2:
         subcol1, subcol2, subcol3 = st.columns([1,1,1])
-        subcol2.image(image, width=80)
 # KPI readout^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+image = Image.open('content/logo.png')
+col1, col2, col3 = st.sidebar.columns([1,1,1])
+col2.text("")
+col2.image(image, width=80)
 
 
