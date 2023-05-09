@@ -433,7 +433,7 @@ gdf_joined = load_data()
 kpi_total = prettify(gdf_joined[school_var_dict[school_var]].sum())
 
 if map_view == 'Demographics only':
-    col1, col2, col3 = st.columns([12,1,0.5])
+    col1, col2, col3 = st.columns([13,1,0.5])
     col1.pydeck_chart(school_map_2D(), use_container_width=True)
     col1.markdown("<span style='color:#000000'>Note: Darker colors corresponds to greater numeric value of demographic variable.</span>", unsafe_allow_html=True)
 else:
